@@ -11,6 +11,20 @@
 	- flask-migrate
 	- flask-SQLAlchemy
 # [Flask Structure](http://exploreflask.com/en/latest/configuration.html)
+- All of the blueprints are applied to the Flask() app in the top-level `app/__init__.py`
+- We can define the prefix in one of two places
+	- When we instantiate the Blueprint() class `app/views/cdr.py`
+	- When we register it with app.register_blueprint().
+- How to register blueprint with flask
+```
+	# facebook/__init__.py
+	
+	from flask import Flask
+	from app.views.cdr import cdr
+	
+	app = Flask(__name__)
+	app.register_blueprint(cdr, url_prefix='/<user_url_slug>')
+```
 - Flask configure files and folders using [Blueprint Functional Structure](http://exploreflask.com/en/latest/blueprints.html#functional-structure)
 ```
 	project
@@ -22,17 +36,20 @@
 	│   ├── sip_trunk_model.py
 	│   ├── static
 	│   │   ├── css
+	│   │   ├── js
 	│   │   └── images
 	│   ├── templates
 	│   │   ├── base.html
 	│   │   ├── callcenter
 	│   │   ├── cdr
 	│   │   ├── dashboard
+	│   │   ├── macro.html
 	│   │   ├── sip_accounts
 	│   │   └── sip_trunks
 	│   └── views
 	│       ├── callcenter.py
 	│       ├── cdr.py
+	│   	├── __init__.py
 	│       ├── dashboard.py
 	│       ├── sip_accounts.py
 	│       └── sip_trunks.py
@@ -44,6 +61,8 @@
 	│   └── staging.py
 	├── instance
 	│   └── config.py
+	├── utils
+	│   └── helpers.py
 	├── config.py					# for using in simple project
 	├── requirements.txt
 	└── run.py
