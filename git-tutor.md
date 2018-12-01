@@ -11,6 +11,8 @@
 2. git branch
 	- Create new branch
 		- git checkout -b add_templates
+	- List all branch
+		- git branch
 	- Switch to new branch
 		- git checkout add_templates
 	- Check status of new branch
