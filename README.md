@@ -7,8 +7,8 @@
 	- PostgreSQL version 9
 - Using Flask with packages
 	- flask-login
-	- flask-principle
-	- flask-debug-toolbar
+	- flask-principal
+	- flask-debugtoolbar
 	- flask-migrate
 	- flask-SQLAlchemy
 # [Flask Structure](http://exploreflask.com/en/latest/configuration.html)
