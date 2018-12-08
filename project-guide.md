@@ -3,7 +3,8 @@
     - Debian 9
     - PostgresSQL
   - Flask
-    - flask-security
+    - flask-login
+    - flask-principle
     - flask-debug-toolbars
     - flask-SQLAlchemy
     - flask-Migrate

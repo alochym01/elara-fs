@@ -6,7 +6,8 @@
 - SQL Server software
 	- PostgreSQL version 9
 - Using Flask with packages
-	- flask-security
+	- flask-login
+	- flask-principle
 	- flask-debug-toolbar
 	- flask-migrate
 	- flask-SQLAlchemy
@@ -18,71 +19,57 @@
 - How to register blueprint with flask
 ```
 	# facebook/__init__.py
-	
+
 	from flask import Flask
 	from app.views.cdr import cdr
-	
+
 	app = Flask(__name__)
 	app.register_blueprint(cdr, url_prefix='/<user_url_slug>')
 ```
 - Flask configure files and folders using [Blueprint Functional Structure](http://exploreflask.com/en/latest/blueprints.html#functional-structure)
-```
-	project
-	├── app
-	│   ├── callcenter_model.py
-	│   ├── cdr_model.py
-	│   ├── __init__.py
-	│   ├── sip_account_model.py
-	│   ├── sip_trunk_model.py
-	│   ├── static
-	│   │   ├── css
-	│   │   ├── js
-	│   │   └── images
-	│   ├── templates
-	│   │   ├── base.html
-	│   │   ├── callcenter
-	│   │   ├── cdr
-	│   │   ├── dashboard
-	│   │   ├── macro.html
-	│   │   ├── sip_accounts
-	│   │   └── sip_trunks
-	│   └── views
-	│       ├── callcenter.py
-	│       ├── cdr.py
-	│   	├── __init__.py
-	│       ├── dashboard.py
-	│       ├── sip_accounts.py
-	│       └── sip_trunks.py
-	├── config					# Configuring based on environment variables
-	│   ├── default.py
-	│   ├── development.py
-	│   ├── __init__.py
-	│   ├── production.py
-	│   └── staging.py
-	├── instance
-	│   └── config.py
-	├── utils
-	│   └── helpers.py
-	├── config.py					# for using in simple project
-	├── requirements.txt
-	└── run.py
-
-
-	# Choose simple project structure or based on environment variable structure project
-
-
-	# config/default.py
-		Default values, to be used for all environments or overridden by individual environments.
-		An example
-			setting DEBUG = False in config/default.py
-			setting DEBUG = True in config/development.py.
-	# config/development.py
-		Values to be used during development.
-		You might specify the URI of a database sitting on localhost.
-	# config/production.py
-		Values to be used in production.
-		You might specify the URI for your database server, as opposed to the localhost database URI used for development.
-```
+	- example
+	```
+		project
+		├── app
+		│   ├── forms
+		│   │   └── user.py
+		│   ├── __init__.py
+		│   ├── models
+		│   │   ├── callcenter_model.py
+		│   │   ├── cdr_model.py
+		│   │   ├── __init__.py
+		│   │   ├── sip_account_model.py
+		│   │   └── sip_trunk_model.py
+		│   ├── static
+		│   │   ├── css
+		│   │   ├── images
+		│   │   └── js
+		│   ├── templates
+		│   │   ├── base.html
+		│   │   ├── callcenter
+		│   │   ├── cdr
+		│   │   ├── dashboard
+		│   │   ├── errors
+		│   │   ├── macro.html
+		│   │   ├── sip_accounts
+		│   │   └── sip_trunks
+		│   └── views
+		│       ├── callcenter.py
+		│       ├── cdr.py
+		│       ├── dashboard.py
+		│       ├── errors.py
+		│       ├── __init__.py
+		│       ├── sip_accounts.py
+		│       └── sip_trunks.py
+		├── config.py
+		├── flask-structure-script.sh
+		├── instance
+		│   └── config.py
+		├── requirement.txt
+		├── run.py
+		└── utils
+			└── helpers.py
+	```
 # Flask Configuration Guide
 - `instance` folder can help us hide secret configuration values
 - Load the configuration from the instance folder
@@ -90,7 +77,7 @@
 ```
 	app = Flask(__name__, instance_relative_config=True)
 	# Load the default configuration
-	app.config.from_object('config.py')
+	app.config.from_object('config')
 
 	# Load the configuration from the instance folder
 	app.config.from_pyfile('config.py')
@@ -109,3 +96,40 @@
 	# export APP_CONFIG_FILE=/chym/config/production.py
 	app.config.from_envvar('APP_CONFIG_FILE')
 ```
+# Flask command line
+
+- `flask --help`
+```
+  Usage: flask [OPTIONS] COMMAND [ARGS]...
+
+
+  A general utility script for Flask applications.
+
+  Provides commands from Flask, extensions, and the application. Loads the
+  application defined in the FLASK_APP environment variable, or from a
+  wsgi.py file. Setting the FLASK_ENV environment variable to 'development'
+  will enable debug mode.
+
+    $ export FLASK_APP=run.py
+    $ export FLASK_ENV=development
+    $ flask run
+
+Options:
+  --version  Show the flask version
+  --help     Show this message and exit.
+
+Commands:
+  routes  Show the routes for the app.
+  run     Runs a development server.
+  shell   Runs a shell in the app context.
+```
+- Using flask run should be export enviroment variables
+	+ FLASK_APP
+		- run.py
+	+ FLASK_ENV
+		- production
+		- development
+	+ flask run
+- Using python run.py
+	+ using config.py file
+	+ python run.py
