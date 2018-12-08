@@ -1,0 +1,17 @@
+- Elara freeswitch
+  - OS
+    - Debian 9
+    - PostgresSQL
+  - Flask
+    - flask-login
+    - flask-principle
+    - flask-debug-toolbars
+    - flask-SQLAlchemy
+    - flask-Migrate
+    - WEB fronend
+  - freeswitch
+    - lua
+      - sip_account
+      - sip_trunk
+    - callcenter
+    - cdr
