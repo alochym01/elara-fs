@@ -1,6 +1,16 @@
 from flask import Flask
-from .views.cdr import cdr
 
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
 
-app.register_blueprint(cdr)
+def create_app():
+
+    app.config.from_object("config")
+
+    # load config from instance folder
+    app.config.from_pyfile("config.py")
+
+    from app.views.cdr import cdr
+
+    app.register_blueprint(cdr)
+
+    return app
